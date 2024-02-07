@@ -19,7 +19,7 @@ const CategoryCreate = () => {
 
     useEffect(() => {
         loadCategories()
-    }, [])
+    }, [user])
 
     const loadCategories = () =>
         getCategories().then((c) =>

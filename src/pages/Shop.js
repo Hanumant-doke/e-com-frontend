@@ -165,7 +165,9 @@ export default function Shop() {
 
     const showBrands = () => brands.map((b) => (
         <Radio
-            value={b} name={b} checked={b === brand} onChange={handleBrand} style={{ paddingRight: 50, paddingLeft: 30, margin: 2 }}
+            key={b}
+            value={b} name={b} checked={b === brand} onChange={handleBrand}
+            style={{ paddingRight: 50, paddingLeft: 30, margin: 2 }}
         >
             {b}
         </Radio>
@@ -188,7 +190,9 @@ export default function Shop() {
 
     const showColors = () => colors.map((c) => (
         <Radio
-            value={c} name={c} checked={c === color} onChange={handleColur} style={{ paddingRight: 60, paddingLeft: 30, margin: 2 }}
+            key={c}
+            value={c} name={c} checked={c === color}
+            onChange={handleColur} style={{ paddingRight: 60, paddingLeft: 30, margin: 2 }}
         >
             {c}
         </Radio>

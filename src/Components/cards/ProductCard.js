@@ -51,7 +51,10 @@ const ProductCard = ({ product }) => {
                 actions={[
                     <Link to={`/product/${slug}`}> <EyeOutlined className='text-warning' /><br />View Product</Link>,
                     <Tooltip title={tooltip}>
-                        <a onClick={handleAddToCart}><ShoppingCartOutlined className='text-danger' /> <br />Add to Cart</a>
+                        <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+                            <ShoppingCartOutlined className='text-danger' /> <br />
+                            {product.quantity < 1 ? 'Out of stock' : 'Add to cart'}
+                        </a>
                     </Tooltip>,
                 ]}
             >

@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@david.kucsai/react-pdf-table": "^0.4.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.11",
+    "@react-pdf/renderer": "^3.3.6",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.4.0",
     "@testing-library/jest-dom": "^5.17.0",

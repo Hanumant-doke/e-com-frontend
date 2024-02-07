@@ -18,7 +18,7 @@ const CategoryUpdate = () => {
 
     useEffect(() => {
         loadCategory();
-    }, []);
+    }, [user]);
 
     const loadCategory = () =>
         getCategory(slug).then((c) => setName(c.data.name));

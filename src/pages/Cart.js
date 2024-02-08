@@ -27,6 +27,21 @@ export default function Cart() {
             })
     }
 
+    const saveCashOrderToDb = () => {
+        dispatch({
+            type: "COD",
+            payload: true,
+        })
+        userCart(cart, user.token)
+            .then((res) => {
+                console.log("CART POST RESULT", res);
+                if (res.data.ok) navigate("/checkout")
+            }).catch((err) => {
+                console.log("cart save error", err);
+            })
+    }
+
+
     const showCartItems = () => (
         <div style={{ padding: 15 }}>
             <table className='table table-borderd' >
@@ -72,8 +87,15 @@ export default function Cart() {
                     <hr />
 
                     {
-                        user ? (<Button variant='outlined' onClick={saveOrderToDb} disabled={!cart.length}>
-                            Proceed to checkout</Button>)
+                        user ? (<>
+                            <Button variant='outlined' style={{ background: "blue", color: "white" }} onClick={saveOrderToDb} disabled={!cart.length}>
+                                Proceed to checkout</Button>
+                            <br />
+                            <Button variant='outlined' className='btn btn-warning mt-2' style={{ background: "yellow" }} onClick={saveCashOrderToDb}
+                                disabled={!cart.length}>
+                                Pay Cash On Delivery</Button>
+                        </>
+                        )
                             : (<Button variant='outlined' >
                                 <Link to={{
                                     pathname: "/login",

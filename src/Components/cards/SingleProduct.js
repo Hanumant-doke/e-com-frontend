@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import { Card, Tabs, Tooltip } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import image from "../../images/image.png";
@@ -13,6 +13,8 @@ import RatingModal from '../modal/RatingModal';
 import showAverage from '../../functions/rating';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from "lodash"
+import { addToWishlist } from '../../functions/user';
+import { toast } from 'react-toastify';
 
 const { TabPane } = Tabs;
 
@@ -22,6 +24,8 @@ export default function SingleProduct({ product, onStarClick, star }) {
 
     const { user, cart } = useSelector((state) => ({ ...state }))
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
     const handleAddToCart = () => {
         let cart = []
@@ -47,6 +51,15 @@ export default function SingleProduct({ product, onStarClick, star }) {
                 payload: true
             })
         }
+    }
+
+    const handleAddToWishlist = (e) => {
+        e.preventDefault()
+        addToWishlist(product._id, user?.token).then((res) => {
+            console.log("Added to wishlist", res.data);
+            toast.success("Added to wishliast")
+            navigate("/user/wishlist")
+        })
     }
 
     return (
@@ -80,7 +93,9 @@ export default function SingleProduct({ product, onStarClick, star }) {
                         <Tooltip title={tooltip}>
                             <a onClick={handleAddToCart}><ShoppingCartOutlined className='text-danger' /> <br />Add to Cart</a>
                         </Tooltip>,
-                        <Link to="/"><HeartOutlined className='text-info' /> <br />Add to Whishlist</Link>,
+                        <a onClick={handleAddToWishlist}>
+                            <HeartOutlined className='text-info' /> <br />Add to Wishlist
+                        </a>,
                         <RatingModal>
                             <StarRatings
                                 name={_id}

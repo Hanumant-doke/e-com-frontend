@@ -13,7 +13,6 @@ import Header from "./Components/nav/Header";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import { currentUser } from "./functions/auth";
 import History from "./pages/user/History";
-import Whishlist from "./pages/user/Whishlist";
 import Password from "./pages/user/Password";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
@@ -32,6 +31,7 @@ import SideDrawer from "./Components/drawer/SideDrawer";
 import CheckOut from "./pages/CheckOut";
 import Coupon from "./pages/admin/coupon/Coupon";
 import Payment from "./pages/Payment";
+import Wishlist from "./pages/user/Wishlist";
 
 
 const App = () => {
@@ -75,7 +75,7 @@ const App = () => {
                 <Route exact path='/forgot/password' element={<ForgotPassword />} />
                 <Route exact path='/user/history' element={<History />} />
                 <Route exact path='/user/password' element={<Password />} />
-                <Route exact path='/user/wishlist' element={<Whishlist />} />
+                <Route exact path='/user/wishlist' element={<Wishlist />} />
                 <Route exact path='/admin/dashboard' element={<AdminDashboard />} />
                 <Route exact path='/admin/category' element={<CategoryCreate />} />
                 <Route exact path="/admin/category/:slug" element={<CategoryUpdate />} />

@@ -1,7 +1,7 @@
 import { Button, Grid } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react'
-import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from '../functions/user';
+import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon, createCashOrderForUser } from '../functions/user';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -19,7 +19,8 @@ export default function CheckOut() {
     const navigate = useNavigate();
 
     const dispatch = useDispatch()
-    const { user } = useSelector((state) => ({ ...state }));
+    const { user, COD } = useSelector((state) => ({ ...state }));
+    const couponTrueOrFalse = useSelector((state) => state.coupon);
     console.log(user, 'user');
 
 
@@ -115,6 +116,18 @@ export default function CheckOut() {
             <Button variant='contained' onClick={applyDiscountCoupon}>Apply</Button>
         </>
     )
+
+    const createCashOrder = () => {
+        createCashOrderForUser(user?.token, COD, couponTrueOrFalse).then((res) => {
+            console.log("Cash order", res);
+            if (res.data.ok) {
+                dispatch({
+                    type: "ADD_TO_CART",
+                    payload: []
+                })
+            }
+        })
+    }
     return (
         <div>
             <Grid container padding={2} spacing={4}>
@@ -143,8 +156,11 @@ export default function CheckOut() {
                     )}
                     <Grid container style={{ justifyContent: "space-around" }}>
                         <Grid item xs={3}>
-                            <Button variant='contained' onClick={() => navigate("/payment")}
-                                disabled={!addressSaved || !products.length}>Place Order</Button>
+                            {COD ? (<Button variant='contained' onClick={createCashOrder}
+                                disabled={!addressSaved || !products.length}>Place Order</Button>) :
+                                (<Button variant='contained' onClick={() => navigate("/payment")}
+                                    disabled={!addressSaved || !products.length}>Place Order</Button>
+                                )}
                         </Grid>
                         <Grid item xs={3}>
                             <Button variant='contained'
@@ -154,6 +170,6 @@ export default function CheckOut() {
                 </Grid>
 
             </Grid>
-        </div>
+        </div >
     )
 }

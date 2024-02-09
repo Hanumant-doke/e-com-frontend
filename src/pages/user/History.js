@@ -72,7 +72,7 @@ const History = () => {
         console.log("Orders:", orders);
         return (
             <div>
-                {orders && orders.map((order, i) => {
+                {orders && orders.reverse().map((order, i) => {
                     console.log("Order:", order);
                     return (
                         <div key={i} className='m-5 p-3 card'>

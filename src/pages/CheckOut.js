@@ -1,7 +1,10 @@
 import { Button, Grid } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react'
-import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon, createCashOrderForUser } from '../functions/user';
+import {
+    getUserCart, emptyUserCart, saveUserAddress,
+    applyCoupon, createCashOrderForUser
+} from '../functions/user';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -120,11 +123,29 @@ export default function CheckOut() {
     const createCashOrder = () => {
         createCashOrderForUser(user?.token, COD, couponTrueOrFalse).then((res) => {
             console.log("Cash order", res);
+
+
             if (res.data.ok) {
+                if (typeof window !== 'undefined') localStorage.removeItem('cart')
+
                 dispatch({
                     type: "ADD_TO_CART",
                     payload: []
                 })
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: false,
+                })
+
+                dispatch({
+                    type: "COD",
+                    payload: false,
+                })
+                emptyUserCart(user.token)
+
+                setTimeout(() => {
+                    navigate("/user/history")
+                }, 1000)
             }
         })
     }

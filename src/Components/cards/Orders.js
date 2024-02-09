@@ -43,6 +43,7 @@ export default function Orders({ orders, handleStatusChange }) {
                                     name='status'
                                     onChange={(e) => handleStatusChange(order._id, e.target.value)}>
                                     <option value="Not Processed">Not Processed</option>
+                                    <option value="Cash On Delivery">Cash On Delivery</option>
                                     <option value="Processing">Processing</option>
                                     <option value="Dispatched">Dispatched</option>
                                     <option value="Cancelled">Cancelled</option>
